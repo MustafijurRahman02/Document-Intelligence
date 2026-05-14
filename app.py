@@ -2,7 +2,7 @@ import streamlit as st
 from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.core.credentials import AzureKeyCredential
 from gtts import gTTS
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 import tempfile
@@ -140,9 +140,8 @@ if "result" in st.session_state:
     with col2:
         lang = st.selectbox("🌍 Translate to", ["hi", "en", "fr", "es", "de"])
         if st.button("Translate"):
-            translator = Translator()
-            translated = translator.translate(text, dest=lang)
-            st.text_area("Translated Text", translated.text, height=200)
+            translated = GoogleTranslator(source='auto', target=lang).translate(text)
+            st.text_area("Translated Text", translated, height=200)
 
     # 📥 Download TXT
     with col3:
